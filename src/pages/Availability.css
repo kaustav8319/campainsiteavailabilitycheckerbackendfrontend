@@ -1,0 +1,113 @@
+.availability-container {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.logout-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.availability-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.month-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.month-label {
+  display: flex;
+  align-items: center;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.availability-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.availability-table th,
+.availability-table td {
+  padding: 8px;
+  border: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.availability-table th {
+  background-color: #e9ecef;
+}
+
+.status-A {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-R {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-X {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
