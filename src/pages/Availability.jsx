@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CampgroundNameInput from "./CampgroundNameInput";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const monthsMap = {
@@ -125,9 +127,9 @@ const AvailabilityForm = () => {
 
       if (response.data) {
         setShowContactModal(false);
-        alert("Availability information has been sent successfully!");
+        toast.success(" Availability info sent successfully!");
       } else {
-        throw new Error("No response from server");
+        toast.error(" No response from server.");
       }
     } catch (error) {
       console.error("Error sending availability:", error);
@@ -161,12 +163,12 @@ const AvailabilityForm = () => {
 
   const getStatusFromDate = (availabilities, date, year) => {
     if (!availabilities) {
-        console.log("❌ Availabilities is undefined or empty!");
+        console.log(" Availabilities is undefined or empty!");
         return "X";
     }
 
     if (!year) {
-        console.log("❌ Year is undefined!");
+        console.log(" Year is undefined!");
         return "X";
     }
 
@@ -182,14 +184,14 @@ const AvailabilityForm = () => {
     } else if (status === "Reserved") {
         return "R";
     } else {
-        console.log(`❓ No matching status found for ${dateString}, returning 'X'`);
+        console.log(` No matching status found for ${dateString}, returning 'X'`);
         return "X";
     }
 };
 
   const getAvailableDates = (siteData) => {
     if (!siteData || !siteData.availabilities) {
-      return []; //  Return an empty array to prevent errors
+      return []; 
     }
   
     const availableDates = [];
@@ -358,11 +360,23 @@ const AvailabilityForm = () => {
                   backgroundColor: '#5B9BD5',
                   color: 'white',
                   cursor: 'pointer',
-                  minWidth: '120px'
+                  minWidth: '120px',
+                  transition: 'background-color 0.3s ease, transform 0.1s ease', 
+                }}
+                onMouseEnter={(e) => (e.target.style.backgroundColor = '#4A89C5')}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = '#5B9BD5')} 
+                onMouseDown={(e) => {
+                  e.target.style.backgroundColor = '#3B78A4'; 
+                  e.target.style.transform = 'scale(0.97)';
+                }}
+                onMouseUp={(e) => {
+                  e.target.style.backgroundColor = '#4A89C5'; 
+                  e.target.style.transform = 'scale(1)';
                 }}
               >
                 Send
               </button>
+
             </div>
           </form>
         </div>
@@ -544,7 +558,6 @@ const AvailabilityForm = () => {
             <div style={{ marginBottom: '20px' }}>
               <label style={{ display: 'block', marginBottom: '8px',fontWeight:"bold" }}>Campground Name:</label>
               
-            {/* ✅ REPLACED the old input with this new component */}
         <CampgroundNameInput
           campgroundName={campgroundName}
           setCampgroundName={setCampgroundName}
@@ -614,10 +627,10 @@ const AvailabilityForm = () => {
                 fontSize: '16px',
                 transition: 'background-color 0.3s ease'
               }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#4A89C5'} // Hover effect
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#5B9BD5'} // Revert on leave
-              onMouseDown={(e) => e.target.style.backgroundColor = '#3B78A4'} // Click effect
-              onMouseUp={(e) => e.target.style.backgroundColor = '#4A89C5'} // Release effect
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#4A89C5'} 
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#5B9BD5'} 
+              onMouseDown={(e) => e.target.style.backgroundColor = '#3B78A4'} 
+              onMouseUp={(e) => e.target.style.backgroundColor = '#4A89C5'} 
             >
               Check Availability
             </button>
@@ -674,6 +687,7 @@ const AvailabilityForm = () => {
           )}
         </div>
           </div>
+          <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
       <ContactModal
         isOpen={showContactModal}
         onClose={() => setShowContactModal(false)}
@@ -686,5 +700,6 @@ const AvailabilityForm = () => {
     </div>
   );
 };
+
 
 export default AvailabilityForm;

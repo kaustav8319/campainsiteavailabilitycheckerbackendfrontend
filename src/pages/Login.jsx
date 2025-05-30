@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -18,6 +18,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
   const [captchaValue, setCaptchaValue] = useState(null);
+  const recaptchaRef = useRef();
   
 
 
@@ -74,7 +75,7 @@ export default function LoginPage() {
       try {
         const response = await axios.post("http://localhost:8087/login", {
           ...formData,
-          captcha_response: captchaValue, // ✅ Include CAPTCHA token
+          captcha_response: captchaValue, 
         });
   
         if (response.status === 200) {
@@ -82,6 +83,8 @@ export default function LoginPage() {
           navigate("/availability");
         }
       } catch (error) {
+        recaptchaRef.current?.reset(); 
+        setCaptchaValue("");
         if (error.response?.status === 401) {
           const detail = error.response?.data?.detail;
           if (detail === "User not registered. Please register first.") {
@@ -162,6 +165,7 @@ export default function LoginPage() {
             
         <ReCAPTCHA
           sitekey="6LcRUCErAAAAAP28pZYyGN6zPb8DN2X0XC1ihvIo"  
+          ref={recaptchaRef}
           onChange={(value) => setCaptchaValue(value)}
         />
 
