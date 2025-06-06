@@ -5,11 +5,29 @@ import { toast } from "react-toastify";
 import CampgroundNameInput from "./CampgroundNameInput";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { 
+  Tent, 
+  Calendar, 
+  MapPin, 
+  Search, 
+  Share2, 
+  LogOut, 
+  Mountain, 
+  Trees, 
+  Sun,
+  Moon,
+  Star,
+  Mail,
+  Phone,
+  User,
+  X,
+  Check,
+  AlertCircle
+} from 'lucide-react';
 
 const monthsMap = {
   1: "January",
-  2: "February",
+  2: "February", 
   3: "March",
   4: "April",
   5: "May",
@@ -54,7 +72,6 @@ const AvailabilityForm = () => {
     setAvailability({});
 
     try {
-      // Format the request data according to backend expectations
       const requestData = {
         contactInfo: {
           name: "System Check",
@@ -73,7 +90,7 @@ const AvailabilityForm = () => {
 
       console.log("Sending request with data:", JSON.stringify(requestData, null, 2));
 
-      const response = await axios.post("http://localhost:8087/availability", requestData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/availability`, requestData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -82,7 +99,7 @@ const AvailabilityForm = () => {
       console.log("API Response:", response.data);
 
       if (response.data && response.data.availability) {
-      setAvailability(response.data.availability);
+        setAvailability(response.data.availability);
       } else {
         setErrorMessage("Invalid response format from server");
         console.error("Invalid response format:", response.data);
@@ -121,15 +138,15 @@ const AvailabilityForm = () => {
 
       console.log("Sending contact form data:", payload);
 
-      const response = await axios.post("http://localhost:8087/send-availability", payload);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/send-availability`, payload);
       
       console.log("Contact form response:", response.data);
 
       if (response.data) {
         setShowContactModal(false);
-        toast.success(" Availability info sent successfully!");
+        toast.success("Availability info sent successfully!");
       } else {
-        toast.error(" No response from server.");
+        toast.error("No response from server.");
       }
     } catch (error) {
       console.error("Error sending availability:", error);
@@ -163,12 +180,12 @@ const AvailabilityForm = () => {
 
   const getStatusFromDate = (availabilities, date, year) => {
     if (!availabilities) {
-        console.log(" Availabilities is undefined or empty!");
+        console.log("Availabilities is undefined or empty!");
         return "X";
     }
 
     if (!year) {
-        console.log(" Year is undefined!");
+        console.log("Year is undefined!");
         return "X";
     }
 
@@ -184,10 +201,10 @@ const AvailabilityForm = () => {
     } else if (status === "Reserved") {
         return "R";
     } else {
-        console.log(` No matching status found for ${dateString}, returning 'X'`);
+        console.log(`No matching status found for ${dateString}, returning 'X'`);
         return "X";
     }
-};
+  };
 
   const getAvailableDates = (siteData) => {
     if (!siteData || !siteData.availabilities) {
@@ -203,7 +220,6 @@ const AvailabilityForm = () => {
   
     return availableDates;
   };
-  
 
   const ContactModal = ({ isOpen, onClose, onSubmit, selectedSite, campgroundName, year, selectedMonths }) => {
     const [formData, setFormData] = useState({
@@ -233,84 +249,61 @@ const AvailabilityForm = () => {
     };
 
     return (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1000
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          padding: '40px',
-          borderRadius: '8px',
-          width: '90%',
-          maxWidth: '600px'
-        }}>
-          <h2 style={{ 
-            marginBottom: '40px',
-            fontSize: '24px',
-            fontWeight: 'normal'
-          }}>Send Availability Information</h2>
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-300 scale-100">
+          <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-6 rounded-t-2xl">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <Share2 className="w-6 h-6 text-white" />
+                <h2 className="text-xl font-bold text-white">Share Availability</h2>
+              </div>
+              <button
+                onClick={onClose}
+                className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
           
-          <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '25px' }}>
-              <label style={{ 
-                display: 'block', 
-                marginBottom: '12px',
-                fontSize: '18px'
-              }}>Name:</label>
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+            <div>
+              <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700 mb-2">
+                <User className="w-4 h-4" />
+                <span>Name</span>
+              </label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  fontSize: '16px',
-                  borderRadius: '8px',
-                  border: '1px solid #ddd',
-                  boxSizing: 'border-box'
-                }}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all duration-300"
+                placeholder="Enter your name"
               />
             </div>
 
-            <div style={{ marginBottom: '25px' }}>
-              <label style={{ 
-                display: 'block', 
-                marginBottom: '12px',
-                fontSize: '18px'
-              }}>Email:</label>
+            <div>
+              <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700 mb-2">
+                <Mail className="w-4 h-4" />
+                <span>Email</span>
+              </label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  fontSize: '16px',
-                  borderRadius: '8px',
-                  border: '1px solid #ddd',
-                  boxSizing: 'border-box'
-                }}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all duration-300"
+                placeholder="Enter your email"
               />
             </div>
 
-            <div style={{ marginBottom: '30px' }}>
-              <label style={{ 
-                display: 'block', 
-                marginBottom: '12px',
-                fontSize: '18px'
-              }}>WhatsApp Number:</label>
+            <div>
+              <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700 mb-2">
+                <Phone className="w-4 h-4" />
+                <span>WhatsApp Number</span>
+              </label>
               <input
                 type="tel"
                 name="whatsapp"
@@ -318,65 +311,24 @@ const AvailabilityForm = () => {
                 onChange={handleChange}
                 required
                 placeholder="Include country code (e.g., +1)"
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  fontSize: '16px',
-                  borderRadius: '8px',
-                  border: '1px solid #ddd',
-                  boxSizing: 'border-box'
-                }}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all duration-300"
               />
             </div>
 
-            <div style={{ 
-              display: 'flex', 
-              gap: '15px', 
-              justifyContent: 'flex-end',
-              marginTop: '40px'
-            }}>
+            <div className="flex space-x-3 pt-4">
               <button
                 type="button"
                 onClick={onClose}
-                style={{
-                  padding: '12px 24px',
-                  fontSize: '16px',
-                  borderRadius: '8px',
-                  border: '1px solid #ddd',
-                  backgroundColor: 'white',
-                  cursor: 'pointer',
-                  minWidth: '120px'
-                }}
+                className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-semibold"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                style={{
-                  padding: '12px 24px',
-                  fontSize: '16px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: '#5B9BD5',
-                  color: 'white',
-                  cursor: 'pointer',
-                  minWidth: '120px',
-                  transition: 'background-color 0.3s ease, transform 0.1s ease', 
-                }}
-                onMouseEnter={(e) => (e.target.style.backgroundColor = '#4A89C5')}
-                onMouseLeave={(e) => (e.target.style.backgroundColor = '#5B9BD5')} 
-                onMouseDown={(e) => {
-                  e.target.style.backgroundColor = '#3B78A4'; 
-                  e.target.style.transform = 'scale(0.97)';
-                }}
-                onMouseUp={(e) => {
-                  e.target.style.backgroundColor = '#4A89C5'; 
-                  e.target.style.transform = 'scale(1)';
-                }}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 Send
               </button>
-
             </div>
           </form>
         </div>
@@ -390,304 +342,341 @@ const AvailabilityForm = () => {
     const days = getDaysInMonth(year, month);
     
     return (
-      <div style={{ marginTop: '30px', overflowX: 'auto' }}>
-        <h3 style={{ marginBottom: '15px' }}>{monthsMap[month]} {year}</h3>
-        <table style={{ 
-          width: '100%', 
-          borderCollapse: 'collapse',
-          backgroundColor: 'white',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-        }}>
-          <thead>
-            <tr style={{ backgroundColor: '#4b6584' }}>
-              <th style={{ 
-                padding: '12px', 
-                color: 'white', 
-                textAlign: 'left',
-                borderBottom: '1px solid #ddd',
-                minWidth: '80px'
-              }}>Sites</th>
-              <th style={{ 
-                padding: '12px', 
-                color: 'white',
-                textAlign: 'left',
-                borderBottom: '1px solid #ddd',
-                minWidth: '100px'
-              }}>Loop</th>
-              {days.map((date, index) => (
-                <th key={index} style={{ 
-                  padding: '12px', 
-                  color: 'white',
-                  textAlign: 'center',
-                  borderBottom: '1px solid #ddd',
-                  minWidth: '60px'
-                }}>
-                  <div>{getDayName(date)}</div>
-                  <div>{date.getDate()}</div>
+      <div className="mt-8 bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
+          <h3 className="text-2xl font-bold text-white flex items-center space-x-3">
+            <Calendar className="w-6 h-6" />
+            <span>{monthsMap[month]} {year}</span>
+          </h3>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="px-6 py-4 text-left text-sm font-bold text-gray-700 border-b-2 border-gray-200">
+                  <div className="flex items-center space-x-2">
+                    <Tent className="w-4 h-4" />
+                    <span>Sites</span>
+                  </div>
                 </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Object.values(monthData).map((siteData) => {
-              const availableDates = getAvailableDates(siteData);
-              return (
-                <tr key={siteData.campsite_id} style={{ borderBottom: '1px solid #ddd' }}>
-                  <td style={{ 
-                    padding: '12px',
-                    color: '#4b6584',
-                    fontWeight: '500'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      {siteData.site}
-                      {availableDates.length > 0 && (
-                        <button
-                          onClick={() => {
-                            setSelectedSite({
-                              site: siteData.site,
-                              loop: siteData.loop,
-                              availableDates
-                            });
-                            setShowContactModal(true);
-                          }}
-                          style={{
-                            padding: '4px 8px',
-                            fontSize: '12px',
-                            backgroundColor: '#4CAF50',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          Share
-                        </button>
-                      )}
+                <th className="px-6 py-4 text-left text-sm font-bold text-gray-700 border-b-2 border-gray-200">
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>Loop</span>
+                  </div>
+                </th>
+                {days.map((date, index) => (
+                  <th key={index} className="px-3 py-4 text-center text-sm font-bold text-gray-700 border-b-2 border-gray-200 min-w-[60px]">
+                    <div className="space-y-1">
+                      <div className="text-xs text-gray-500">{getDayName(date)}</div>
+                      <div className="text-lg">{date.getDate()}</div>
                     </div>
-                  </td>
-                  <td style={{ padding: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <span>{siteData.loop}</span>
-                    </div>
-                  </td>
-                  {days.map((date, index) => {
-                    const status = getStatusFromDate(siteData.availabilities, date, year);
-                    let backgroundColor = '#f5f6fa';
-                    let textColor = '#424242';
-                    
-                    if (status === 'A') {
-                      backgroundColor = '#e8f5e9';
-                      textColor = '#2e7d32';
-                    } else if (status === 'R') {
-                      backgroundColor = '#ffebee';
-                      textColor = '#c62828';
-                    }
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {Object.values(monthData).map((siteData, index) => {
+                const availableDates = getAvailableDates(siteData);
+                return (
+                  <tr key={siteData.campsite_id} className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-25'}`}>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-bold text-indigo-600">{siteData.site}</span>
+                        {availableDates.length > 0 && (
+                          <button
+                            onClick={() => {
+                              setSelectedSite({
+                                site: siteData.site,
+                                loop: siteData.loop,
+                                availableDates
+                              });
+                              setShowContactModal(true);
+                            }}
+                            className="flex items-center space-x-1 px-3 py-1 bg-emerald-500 text-white text-xs font-semibold rounded-full hover:bg-emerald-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105"
+                          >
+                            <Share2 className="w-3 h-3" />
+                            <span>Share</span>
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-gray-700 font-medium">{siteData.loop}</span>
+                    </td>
+                    {days.map((date, index) => {
+                      const status = getStatusFromDate(siteData.availabilities, date, year);
+                      let bgColor = 'bg-gray-100';
+                      let textColor = 'text-gray-500';
+                      let icon = <X className="w-4 h-4" />;
+                      
+                      if (status === 'A') {
+                        bgColor = 'bg-emerald-100';
+                        textColor = 'text-emerald-700';
+                        icon = <Check className="w-4 h-4" />;
+                      } else if (status === 'R') {
+                        bgColor = 'bg-red-100';
+                        textColor = 'text-red-700';
+                        icon = <AlertCircle className="w-4 h-4" />;
+                      }
 
-                    return (
-                      <td key={index} style={{ 
-                        padding: '12px',
-                        textAlign: 'center',
-                        backgroundColor,
-                        color: textColor,
-                        fontWeight: '500'
-                      }}>
-                        {status}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                      return (
+                        <td key={index} className="px-3 py-4 text-center">
+                          <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full ${bgColor} ${textColor} font-bold transition-all duration-200 hover:scale-110`}>
+                            {icon}
+                          </div>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}
-      <div style={{
-        backgroundColor: 'white',
-        padding: '15px 30px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-        marginBottom: '20px'
-      }}>
-        <h1 style={{ 
-          margin: 0, 
-          fontSize: '24px',
-          color: '#333',
-          fontWeight: 'bold',
-        }}>
-          Campsite Availability Checker
-        </h1>
-        <button
-          onClick={handleLogout}
-          style={{
-            backgroundColor: '#dc3545',
-            color: 'white',
-            border: 'none',
-            padding: '8px 16px',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '500'
-          }}
-        >
-          Logout
-        </button>
+      <header className="bg-white shadow-lg sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center space-x-4">
+              <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-3 rounded-xl">
+                <Tent className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                  CampSite Finder
+                </h1>
+                <p className="text-sm text-gray-500">Find your perfect camping spot</p>
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors font-semibold shadow-md hover:shadow-lg transform hover:scale-105"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Banner */}
+      <div className="relative bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 py-20">
+        <div className="absolute inset-0 bg-black opacity-20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex items-center justify-center space-x-4 mb-6">
+            <Mountain className="w-12 h-12 text-white" />
+            <Trees className="w-12 h-12 text-white" />
+            <Sun className="w-12 h-12 text-white" />
+          </div>
+          <h2 className="text-5xl font-bold text-white mb-4">
+            Discover Amazing Campsites
+          </h2>
+          <p className="text-xl text-emerald-100 max-w-3xl mx-auto">
+            Check real-time availability for your favorite campgrounds and plan the perfect outdoor adventure
+          </p>
+        </div>
       </div>
 
       {/* Main Content */}
-      <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px' ,fontWeight:"bold"}}>Campsite Availability Checker</h2>
-        
-        <div style={{ 
-          backgroundColor: 'white', 
-          padding: '30px', 
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}>
-      <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px',fontWeight:"bold" }}>Campground Name:</label>
-              
-        <CampgroundNameInput
-          campgroundName={campgroundName}
-          setCampgroundName={setCampgroundName}
-        />
-
-              <small style={{ color: '#888', fontStyle: 'italic', marginTop: '4px', display: 'block' }}>
-                 Example: Enter campground name like "Cape Fair"
-              </small>
-        </div>
-
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px',fontWeight:"bold" }}>Year:</label>
-          <input
-            type="number"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            required
-            min="2025"
-            max="2100"
-                style={{
-                  width: '100%',
-                  padding: '8px',
-                  borderRadius: '4px',
-                  border: '1px solid #ddd',
-                  fontWeight:"bold"
-                  
-                }}
-          />
-        </div>
-
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px',fontWeight:'bold'}}>Select Months:</label>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-                gap: '10px' 
-              }}>
-          {Object.entries(monthsMap).map(([key, month]) => (
-                  <label key={key} style={{ 
-                    display: 'flex', 
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontWeight:'bold'
-                  }}>
-              <input
-                type="checkbox"
-                value={key}
-                checked={selectedMonths.includes(parseInt(key))}
-                onChange={() => handleCheckboxChange(parseInt(key))}
-              />
-              {month}
-            </label>
-          ))}
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              style={{
-                width: '100%',
-                padding: '12px',
-                backgroundColor: '#5B9BD5',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '16px',
-                transition: 'background-color 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#4A89C5'} 
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#5B9BD5'} 
-              onMouseDown={(e) => e.target.style.backgroundColor = '#3B78A4'} 
-              onMouseUp={(e) => e.target.style.backgroundColor = '#4A89C5'} 
-            >
-              Check Availability
-            </button>
-      </form>
-
-          {errorMessage && (
-            <p style={{ color: 'red', marginTop: '20px' }}>{errorMessage}</p>
-          )}
-
-          {Object.keys(availability).length > 0 && (
-            <div style={{ marginTop: '20px' }}>
-              <div style={{ 
-                display: 'flex', 
-                gap: '20px', 
-                justifyContent: 'center',
-                marginBottom: '20px',
-                padding: '10px',
-                backgroundColor: '#f8f9fa',
-                borderRadius: '4px'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ 
-                    backgroundColor: '#e8f5e9', 
-                    color: '#2e7d32',
-                    padding: '2px 8px',
-                    borderRadius: '4px'
-                  }}>A</span>
-                  <span>Available</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ 
-                    backgroundColor: '#ffebee', 
-                    color: '#c62828',
-                    padding: '2px 8px',
-                    borderRadius: '4px'
-                  }}>R</span>
-                  <span>Reserved</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ 
-                    backgroundColor: '#eeeeee', 
-                    color: '#424242',
-                    padding: '2px 8px',
-                    borderRadius: '4px'
-                  }}>X</span>
-                  <span>Not Available</span>
-                </div>
-              </div>
-              
-              {Object.entries(availability).map(([month, monthData]) => 
-                renderAvailabilityTable(monthData, year, parseInt(month))
-              )}
-            </div>
-          )}
-        </div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-8">
+            <h3 className="text-3xl font-bold text-white text-center flex items-center justify-center space-x-3">
+              <Search className="w-8 h-8" />
+              <span>Check Availability</span>
+            </h3>
           </div>
-          <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+          
+          <div className="p-8 lg:p-12">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div>
+                <label className="flex items-center space-x-2 text-lg font-bold text-gray-700 mb-4">
+                  <MapPin className="w-5 h-5 text-emerald-600" />
+                  <span>Campground Name</span>
+                </label>
+                <CampgroundNameInput
+                  campgroundName={campgroundName}
+                  setCampgroundName={setCampgroundName}
+                />
+                <p className="text-sm text-gray-500 mt-2 italic">
+                  💡 Example: Enter campground name like "Cape Fair"
+                </p>
+              </div>
+
+              <div>
+                <label className="flex items-center space-x-2 text-lg font-bold text-gray-700 mb-4">
+                  <Calendar className="w-5 h-5 text-emerald-600" />
+                  <span>Year</span>
+                </label>
+                <input
+                  type="number"
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  required
+                  min="2025"
+                  max="2100"
+                  className="w-full px-4 py-3 text-lg font-semibold border-2 border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white shadow-sm"
+                />
+              </div>
+
+              <div>
+                <label className="flex items-center space-x-2 text-lg font-bold text-gray-700 mb-4">
+                  <Calendar className="w-5 h-5 text-emerald-600" />
+                  <span>Select Months</span>
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {Object.entries(monthsMap).map(([key, month]) => (
+                    <label key={key} className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-xl hover:border-emerald-300 hover:bg-emerald-50 transition-all duration-300 cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        value={key}
+                        checked={selectedMonths.includes(parseInt(key))}
+                        onChange={() => handleCheckboxChange(parseInt(key))}
+                        className="w-5 h-5 text-emerald-600 border-2 border-gray-300 rounded focus:ring-emerald-500 focus:ring-2"
+                      />
+                      <span className="font-semibold text-gray-700 group-hover:text-emerald-700 transition-colors">
+                        {month}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-3"
+              >
+                <Search className="w-6 h-6" />
+                <span>Check Availability</span>
+              </button>
+            </form>
+
+            {errorMessage && (
+              <div className="mt-8 p-6 bg-red-50 border-l-4 border-red-500 rounded-xl">
+                <div className="flex items-center space-x-3">
+                  <AlertCircle className="w-6 h-6 text-red-500" />
+                  <p className="text-red-700 font-semibold">{errorMessage}</p>
+                </div>
+              </div>
+            )}
+
+            {Object.keys(availability).length > 0 && (
+              <div className="mt-12">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-2xl mb-8">
+                  <h4 className="text-lg font-bold text-gray-700 mb-4 text-center">Legend</h4>
+                  <div className="flex flex-wrap justify-center gap-6">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                        <Check className="w-4 h-4 text-emerald-700" />
+                      </div>
+                      <span className="font-semibold text-gray-700">Available</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <AlertCircle className="w-4 h-4 text-red-700" />
+                      </div>
+                      <span className="font-semibold text-gray-700">Reserved</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                        <X className="w-4 h-4 text-gray-500" />
+                      </div>
+                      <span className="font-semibold text-gray-700">Not Available</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-8">
+                  {Object.entries(availability).map(([month, monthData]) => 
+                    renderAvailabilityTable(monthData, year, parseInt(month))
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-16 mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-lg">
+                  <Tent className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold">CampSite Finder</h3>
+              </div>
+              <p className="text-gray-400">
+              •Your trusted companion for finding the perfect camping spots. Explore nature with confidence.
+              </p>
+              <p className="text-gray-400">
+               •Never miss an open campsite again — get notified instantly.
+              </p>
+              <p className="text-gray-400">
+               •Explore the wild. We’ll handle the availability checks..
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4 flex items-center space-x-2">
+                <Star className="w-5 h-5 text-yellow-400" />
+                <span>Features</span>
+              </h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>• Real-time availability</li>
+                <li>• Multiple campground search</li>
+                <li>• Easy sharing options</li>
+                <li>• Mobile-friendly design</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4 flex items-center space-x-2">
+                <Moon className="w-5 h-5 text-blue-400" />
+                <span>Adventure Awaits</span>
+              </h4>
+              <p className="text-gray-400 mb-4">
+                Start planning your next outdoor adventure today. Nature is calling!
+              </p>
+              <div className="flex space-x-4">
+                <Mountain className="w-8 h-8 text-gray-600" />
+                <Trees className="w-8 h-8 text-green-600" />
+                <Sun className="w-8 h-8 text-yellow-600" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-800 mt-12 pt-8 text-center">
+            <p className="text-gray-400">
+              © 2025 CampSite Finder. Made with ❤️ for outdoor enthusiasts.
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      <ToastContainer 
+        position="top-right" 
+        autoClose={3000} 
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      
       <ContactModal
         isOpen={showContactModal}
         onClose={() => setShowContactModal(false)}
@@ -700,6 +689,5 @@ const AvailabilityForm = () => {
     </div>
   );
 };
-
 
 export default AvailabilityForm;

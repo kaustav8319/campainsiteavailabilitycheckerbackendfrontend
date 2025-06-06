@@ -1,4 +1,4 @@
-// components/CampgroundNameInput.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -14,7 +14,9 @@ const CampgroundNameInput = ({ campgroundName, setCampgroundName }) => {
       }
 
       try {
-        const res = await axios.get(`http://localhost:8087/search-suggestions?query=${campgroundName}`);
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/search-suggestions`, {
+          params: { query: campgroundName }
+        });
         setSuggestions(res.data.results || []);
         setShowSuggestions(true);
       } catch (err) {
@@ -32,50 +34,26 @@ const CampgroundNameInput = ({ campgroundName, setCampgroundName }) => {
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="relative w-full">
       <input
         type="text"
         value={campgroundName}
         onChange={(e) => setCampgroundName(e.target.value)}
         required
-        placeholder="Enter campground name"
-        style={{
-          width: '100%',
-          padding: '8px',
-          borderRadius: '4px',
-          border: '1px solid #ddd',
-          fontWeight: "bold"
-        }}
+        placeholder="Enter campground name..."
+        className="w-full px-4 py-3 text-lg font-semibold border-2 border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white shadow-sm"
         onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
         onFocus={() => campgroundName && setShowSuggestions(true)}
       />
 
       {showSuggestions && suggestions.length > 0 && (
-        <ul style={{
-          position: 'absolute',
-          top: '100%',
-          left: 0,
-          right: 0,
-          backgroundColor: '#fff',
-          border: '1px solid #ddd',
-          borderTop: 'none',
-          zIndex: 1000,
-          maxHeight: '200px',
-          overflowY: 'auto',
-          listStyleType: 'none',
-          margin: 0,
-          padding: 0
-        }}>
+        <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-xl mt-2 max-h-60 overflow-y-auto shadow-lg">
           {suggestions.map((s) => (
             <li
               key={s.id}
               onClick={() => handleSuggestionClick(s.name)}
-              style={{
-                padding: '8px',
-                cursor: 'pointer',
-                borderBottom: '1px solid #eee'
-              }}
               onMouseDown={(e) => e.preventDefault()}
+              className="px-4 py-2 cursor-pointer hover:bg-emerald-100 border-b last:border-none"
             >
               {s.name}
             </li>
