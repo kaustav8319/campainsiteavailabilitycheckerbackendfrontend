@@ -48,6 +48,7 @@ const AvailabilityForm = () => {
   const [availability, setAvailability] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [showContactModal, setShowContactModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [contactInfo, setContactInfo] = useState({
     name: "",
     email: "",
@@ -70,7 +71,7 @@ const AvailabilityForm = () => {
     e.preventDefault();
     setErrorMessage("");
     setAvailability({});
-
+    setLoading(true);
     try {
       const requestData = {
         contactInfo: {
@@ -120,6 +121,7 @@ const AvailabilityForm = () => {
       }
       setErrorMessage(errorMsg);
     }
+    setLoading(false);
   };
 
   const handleContactSubmit = async (formData) => {
@@ -309,10 +311,13 @@ const AvailabilityForm = () => {
                 name="whatsapp"
                 value={formData.whatsapp}
                 onChange={handleChange}
-                required
+                
                 placeholder="Include country code (e.g., +1)"
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all duration-300"
               />
+              <p className="text-xs text-gray-500 mt-1">
+                Include your country code (e.g., +91, +1). Leave empty if you don't want WhatsApp notifications.
+              </p>
             </div>
 
             <div className="flex space-x-3 pt-4">
@@ -552,11 +557,19 @@ const AvailabilityForm = () => {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-3"
+                disabled={loading}
+                className="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-xl hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center space-x-3 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <Search className="w-6 h-6" />
-                <span>Check Availability</span>
+                {loading ? (
+                  <div className="w-6 h-6 border-4 border-white border-t-teal-500 rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <Search className="w-6 h-6" />
+                    <span>Check Availability</span>
+                  </>
+                )}
               </button>
+
             </form>
 
             {errorMessage && (

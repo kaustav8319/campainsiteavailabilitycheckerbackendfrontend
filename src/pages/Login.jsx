@@ -302,10 +302,19 @@ export default function LoginPage() {
             </div>
             
             <div className="text-center md:text-right">
-              <p className="text-gray-600">
-                © {new Date().getFullYear()} CampSite Finder. All rights reserved.
-              </p>
-            </div>
+                <p className="text-gray-600">
+                  © {new Date().getFullYear()} CampSite Finder. All rights reserved.
+                </p>
+                <div className="mt-2 space-x-4">
+                  <Link to="/terms" className="underline hover:text-teal-600 block md:inline">
+                    Terms & Conditions
+                  </Link>
+                  <Link to="/privacy" className="underline hover:text-teal-600 block md:inline">
+                    Privacy Policy
+                  </Link>
+                </div>
+              </div>
+
           </div>
         </div>
       </footer>
