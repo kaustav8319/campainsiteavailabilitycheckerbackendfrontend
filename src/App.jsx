@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route,Navigate } from 'react-router-dom';
 import AvailabilityForm from './pages/Availability';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Registration';
@@ -14,7 +14,11 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route exact path="/" element={<LoginPage />} />
+         {/* Redirect / to /landingpage */}
+        <Route path="/" element={<Navigate to="/landingpage" />} />
+
+        {/* Now /landingpage will load LoginPage */}
+        <Route path="/landingpage" element={<LoginPage />} />
         <Route exact path="/availability" element={<AvailabilityForm />} />
         <Route exact path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -22,9 +26,9 @@ function App() {
 
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
-        
+
       </Routes>
-      
+
     </div>
   );
 }
