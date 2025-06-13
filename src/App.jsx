@@ -8,17 +8,15 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import LandingPage from './pages/LandingPage';
 
 
 function App() {
   return (
     <div className="app-container">
       <Routes>
-         {/* Redirect / to /landingpage */}
-        <Route path="/" element={<Navigate to="/landingpage" />} />
-
-        {/* Now /landingpage will load LoginPage */}
-        <Route path="/landingpage" element={<LoginPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route exact path="/availability" element={<AvailabilityForm />} />
         <Route exact path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

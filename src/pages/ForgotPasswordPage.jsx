@@ -149,7 +149,7 @@ export default function ForgotPasswordPage() {
 
               <div className="mt-8 text-center">
                 <button
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/login")}
                   className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors flex items-center justify-center space-x-2 mx-auto"
                 >
                   <ArrowLeft className="w-4 h-4" />
