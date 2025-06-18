@@ -91,7 +91,7 @@ export default function LoginPage() {
         });
   
         if (response.status === 200) {
-          localStorage.setItem("token", response.data.token);
+           localStorage.setItem("token", response.data.access_token);
           navigate("/availability");
         }
       } catch (error) {

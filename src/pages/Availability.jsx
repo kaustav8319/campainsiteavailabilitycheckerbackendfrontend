@@ -90,10 +90,12 @@ const AvailabilityForm = () => {
       };
 
       console.log("Sending request with data:", JSON.stringify(requestData, null, 2));
+      const token = localStorage.getItem("token");
 
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/availability`, requestData, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
       });
       
@@ -108,6 +110,12 @@ const AvailabilityForm = () => {
     } catch (error) {
       console.error("Full error object:", error);
       console.error("Error response:", error.response?.data);
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        setErrorMessage("Session expired or unauthorized. Please log in again.");
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+
       
       let errorMsg = "Failed to fetch availability. Please check input data.";
       if (error.response?.data?.detail) {

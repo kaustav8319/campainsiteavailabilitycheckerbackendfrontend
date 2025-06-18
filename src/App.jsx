@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route,Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import AvailabilityForm from './pages/Availability';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Registration';
@@ -9,7 +9,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import LandingPage from './pages/LandingPage';
-
+import PrivateRoute from './components/PrivateRoute'; 
 
 function App() {
   return (
@@ -17,16 +17,22 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route exact path="/availability" element={<AvailabilityForm />} />
-        <Route exact path="/register" element={<RegisterPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
 
+        
+        <Route
+          path="/availability"
+          element={
+            <PrivateRoute>
+              <AvailabilityForm />
+            </PrivateRoute>
+          }
+        />
       </Routes>
-
     </div>
   );
 }
