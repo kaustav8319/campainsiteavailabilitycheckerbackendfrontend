@@ -129,7 +129,7 @@ const TermsConditions = () => {
               <p className="text-gray-600 leading-relaxed">
                 If you have any questions about these Terms and Conditions, please contact us at{' '}
                 <a href="mailto:legal@campsitefinderPro.com" className="text-emerald-600 hover:underline">
-                  legal@campsitefinderPro.com
+                  admin@gizmofacts.com
                 </a>
               </p>
             </section>

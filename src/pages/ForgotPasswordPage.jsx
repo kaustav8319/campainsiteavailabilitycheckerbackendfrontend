@@ -58,7 +58,7 @@ export default function ForgotPasswordPage() {
             </div>
             <div className="text-center">
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                CampSite Finder
+                CampSite Checker
               </h1>
               <p className="text-blue-600 font-medium">Password Recovery</p>
             </div>
@@ -169,7 +169,7 @@ export default function ForgotPasswordPage() {
               <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-2 rounded-lg">
                 <Tent className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-gray-700">CampSite Finder</span>
+              <span className="font-bold text-gray-700">CampSite Checker</span>
             </div>
             
             <div className="flex items-center justify-center space-x-6">
@@ -180,7 +180,7 @@ export default function ForgotPasswordPage() {
             
             <div className="text-center md:text-right">
               <p className="text-gray-600">
-                © {new Date().getFullYear()} CampSite Finder. All rights reserved.
+                © {new Date().getFullYear()} CampSite Checker. All rights reserved.
               </p>
             </div>
           </div>

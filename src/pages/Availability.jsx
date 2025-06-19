@@ -464,7 +464,7 @@ const AvailabilityForm = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                  CampSite Finder
+                  CampSite Checker
                 </h1>
                 <p className="text-sm text-gray-500">Find your perfect camping spot</p>
               </div>
@@ -635,7 +635,7 @@ const AvailabilityForm = () => {
                 <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-lg">
                   <Tent className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold">CampSite Finder</h3>
+                <h3 className="text-xl font-bold">CampSite Checker</h3>
               </div>
               <p className="text-gray-400">
               •Your trusted companion for finding the perfect camping spots. Explore nature with confidence.
@@ -679,7 +679,7 @@ const AvailabilityForm = () => {
           
           <div className="border-t border-gray-800 mt-12 pt-8 text-center">
             <p className="text-gray-400">
-              © 2025 CampSite Finder. Made with ❤️ for outdoor enthusiasts.
+              © 2025 CampSite Checker. Powered by Gizmofacts.
             </p>
           </div>
         </div>

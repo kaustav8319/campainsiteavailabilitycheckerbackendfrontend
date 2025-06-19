@@ -76,21 +76,22 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <motion.div 
-              className="flex items-center space-x-4"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+            className="flex items-center space-x-4"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
             >
-              <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-3 rounded-2xl shadow-lg">
-                <Tent className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                  CampSite Finder Pro
-                </h1>
-                <p className="text-sm text-gray-600">Your Gateway to Nature's Best</p>
-              </div>
-            </motion.div>
+        <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-3 rounded-2xl shadow-lg">
+            <Tent className="w-8 h-8 text-white" />
+        </div>
+        <div>
+         <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                        CampSite Checker
+        </h1>
+                        {/* <p className="text-sm text-gray-600">Your Gateway to Nature's Best</p> */}
+        </div>
+        </motion.div>
+
             
             <motion.div 
               className="flex items-center space-x-4"
@@ -178,7 +179,7 @@ const LandingPage = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Why Choose CampSite Finder Pro?
+              Why Choose CampSite Checker?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Experience the most advanced campground search platform with features designed for modern outdoor enthusiasts.
@@ -261,7 +262,7 @@ const LandingPage = () => {
               Ready to Start Your Adventure?
             </h2>
             <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-              Join thousands of campers who trust CampSite Finder Pro to discover their next outdoor adventure.
+              Join thousands of campers who trust CampSite Checker to discover their next outdoor adventure.
             </p>
             <Link
               to="/register"
@@ -283,7 +284,7 @@ const LandingPage = () => {
                 <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-lg">
                   <Tent className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold">CampSite Finder Pro</h3>
+                <h3 className="text-xl font-bold">CampSite Checker</h3>
               </div>
               <p className="text-gray-400 mb-4 max-w-md">
                 The most advanced campground search platform designed for modern outdoor enthusiasts. Find, share, and book your perfect camping experience.
@@ -339,7 +340,7 @@ const LandingPage = () => {
           
           <div className="border-t border-gray-800 mt-12 pt-8 text-center">
             <p className="text-gray-400">
-              © {new Date().getFullYear()} CampSite Finder Pro. Made with ❤️ for outdoor enthusiasts.
+              © {new Date().getFullYear()} CampSite Checker. Powered by Gizmofacts.
             </p>
           </div>
         </div>

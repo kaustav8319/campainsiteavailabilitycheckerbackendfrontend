@@ -133,7 +133,7 @@ export default function LoginPage() {
             </div>
             <div className="text-center">
               <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                CampSite Finder
+                CampSite Checker
               </h1>
               <p className="text-emerald-600 font-medium">Your Gateway to Nature's Best</p>
             </div>
@@ -226,7 +226,7 @@ export default function LoginPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-4 top-1/2 transform -translate-y-1/2 text-emerald-400 hover:text-emerald-600 transition-colors"
                     >
-                      {/* {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />} */}
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
                   {errors.password && (
@@ -237,13 +237,17 @@ export default function LoginPage() {
                   )}
                 </div>
                 
-                {/* reCAPTCHA */}
+                {/* reCAPTCHA - Mobile Responsive */}
                 <div className="flex justify-center">
-                  <ReCAPTCHA
-                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}  
-                    ref={recaptchaRef}
-                    onChange={(value) => setCaptchaValue(value)}
-                  />
+                  <div className="recaptcha-container">
+                    <ReCAPTCHA
+                      sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}  
+                      ref={recaptchaRef}
+                      onChange={(value) => setCaptchaValue(value)}
+                      size="normal"
+                      theme="light"
+                    />
+                  </div>
                 </div>
 
                 {/* Submit Button */}
@@ -292,7 +296,7 @@ export default function LoginPage() {
               <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-lg">
                 <Tent className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-gray-700">CampSite Finder</span>
+              <span className="font-bold text-gray-700">CampSite Checker</span>
             </div>
             
             <div className="flex items-center justify-center space-x-6">
@@ -303,15 +307,15 @@ export default function LoginPage() {
             
             <div className="text-center md:text-right">
                 <p className="text-gray-600">
-                  © {new Date().getFullYear()} CampSite Finder. All rights reserved.
+                  © {new Date().getFullYear()} CampSite Checker. All rights reserved.
                 </p>
                 <div className="mt-2 space-x-4">
-                  <Link to="/terms" className="underline hover:text-teal-600 block md:inline">
+                  {/* <Link to="/terms" className="underline hover:text-teal-600 block md:inline">
                     Terms & Conditions
                   </Link>
                   <Link to="/privacy" className="underline hover:text-teal-600 block md:inline">
                     Privacy Policy
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 

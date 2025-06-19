@@ -112,7 +112,7 @@ const PrivacyPolicy = () => {
               <p className="text-gray-600 leading-relaxed">
                 If you have any questions about this Privacy Policy, please contact us at{' '}
                 <a href="mailto:privacy@campsitefinderPro.com" className="text-blue-600 hover:underline">
-                  privacy@campsitefinderPro.com
+                  admin@gizmofacts.com
                 </a>
               </p>
             </section>
